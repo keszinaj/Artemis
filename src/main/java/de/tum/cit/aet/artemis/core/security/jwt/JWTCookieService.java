@@ -85,9 +85,9 @@ public class JWTCookieService {
         Collection<String> activeProfiles = Arrays.asList(environment.getActiveProfiles());
         boolean isSecure = !activeProfiles.contains(DEVELOPMENT_PROFILE);
 
-        return ResponseCookie.from(JWT_COOKIE_NAME, jwt).httpOnly(true) // Must be httpOnly
-                .sameSite("Lax") // Must be Lax to allow navigation links to Artemis to work
-                .secure(isSecure) // Must be secure
+        return ResponseCookie.from(JWT_COOKIE_NAME, jwt).httpOnly(false) // Must be httpOnly
+                .sameSite("None") // Must be Lax to allow navigation links to Artemis to work
+                .secure(true) // Must be secure
                 .path("/") // Must be "/" to be sent in ALL request
                 .maxAge(duration) // Duration should match the duration of the jwt
                 .build(); // Build cookie
