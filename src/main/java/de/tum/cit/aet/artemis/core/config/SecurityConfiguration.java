@@ -34,7 +34,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import de.tum.cit.aet.artemis.core.security.DomainUserDetailsService;
-import de.tum.cit.aet.artemis.core.security.Role;
 import de.tum.cit.aet.artemis.core.security.filter.SpaWebFilter;
 import de.tum.cit.aet.artemis.core.security.jwt.JWTConfigurer;
 import de.tum.cit.aet.artemis.core.security.jwt.TokenProvider;
@@ -201,7 +200,7 @@ public class SecurityConfiguration {
                     // Information and health endpoints do not need authentication
                     .requestMatchers("/management/info", "/management/health").permitAll()
                     // Admin area requires specific authority.
-                    .requestMatchers("/api/admin/**").hasAuthority(Role.ADMIN.getAuthority())
+                    .requestMatchers("/api/admin/**").authenticated()
                     // Publicly accessible API endpoints (allowed for everyone).
                     .requestMatchers("/api/public/**").permitAll()
                     // Websocket and other specific endpoints allowed without authentication.

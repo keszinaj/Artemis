@@ -68,7 +68,6 @@ import tech.jhipster.web.util.ResponseUtil;
  * Another option would be to have a specific JPA entity graph to handle this case.
  */
 @Profile(PROFILE_CORE)
-@EnforceAdmin
 @RestController
 @RequestMapping("api/admin/")
 public class AdminUserResource {
@@ -108,6 +107,7 @@ public class AdminUserResource {
      * @throws BadRequestAlertException 400 (Bad Request) if the login or email is already in use
      */
     @PostMapping("users")
+    @EnforceAdmin
     public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
 
         this.userService.checkUsernameAndPasswordValidityElseThrow(managedUserVM.getLogin(), managedUserVM.getPassword());
@@ -178,6 +178,7 @@ public class AdminUserResource {
      * @param login the login of the user to find
      * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
      */
+    @EnforceAdmin
     @GetMapping("users/{login:" + Constants.LOGIN_REGEX + "}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
@@ -197,6 +198,7 @@ public class AdminUserResource {
      * @param userDtos the list of users (with at one unique user identifier) who should be imported to Artemis
      * @return the list of users who could not be imported, because they could NOT be found in the Artemis database and could NOT be found in the connected LDAP
      */
+    @EnforceAdmin
     @PostMapping("users/import")
     public ResponseEntity<List<StudentDTO>> importUsers(@RequestBody List<StudentDTO> userDtos) {
         log.debug("REST request to import {} to Artemis", userDtos);
@@ -212,6 +214,7 @@ public class AdminUserResource {
      */
     @PutMapping("users/{userId}/sync-ldap")
     @Profile("ldap | ldap-only")
+    @EnforceAdmin
     public ResponseEntity<UserDTO> syncUserViaLdap(@PathVariable Long userId) {
         log.debug("REST request to update ldap information User : {}", userId);
 
@@ -229,6 +232,7 @@ public class AdminUserResource {
      * @param userSearch the pagination information for user search
      * @return the ResponseEntity with status 200 (OK) and with body all users
      */
+    @EnforceAdmin
     @GetMapping("users")
     public ResponseEntity<List<UserDTO>> getAllUsers(UserPageableSearchDTO userSearch) {
         final Page<UserDTO> page = userRepository.getAllManagedUsers(userSearch);
@@ -241,6 +245,7 @@ public class AdminUserResource {
      *
      * @return the ResponseEntity with status 200 (OK) and with body all logins of not enrolled users
      */
+    @EnforceAdmin
     @GetMapping("users/not-enrolled")
     public ResponseEntity<List<String>> getNotEnrolledUsers() {
         List<String> logins = userRepository.findAllNotEnrolledUsers();
@@ -252,6 +257,7 @@ public class AdminUserResource {
      *
      * @return the ResponseEntity with status 200 (OK) and with body a string list of the all the roles
      */
+    @EnforceAdmin
     @GetMapping("users/authorities")
     public ResponseEntity<List<String>> getAuthorities() {
         return ResponseEntity.ok(authorityRepository.getAuthorities());
@@ -263,6 +269,7 @@ public class AdminUserResource {
      * @param login the login of the user to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @EnforceAdmin
     @DeleteMapping("users/{login:" + Constants.LOGIN_REGEX + "}")
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
@@ -279,6 +286,7 @@ public class AdminUserResource {
      * @param logins user logins to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    @EnforceAdmin
     @DeleteMapping("users")
     public ResponseEntity<List<String>> deleteUsers(@RequestBody List<String> logins) {
         log.debug("REST request to delete {} users", logins.size());
