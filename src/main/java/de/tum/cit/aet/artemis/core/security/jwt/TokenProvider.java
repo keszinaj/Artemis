@@ -112,7 +112,7 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
         var validity = System.currentTimeMillis() + duration;
-        var jwtBuilder = Jwts.builder().subject(authentication.getName()).claim(AUTHORITIES_KEY, authorities);
+        var jwtBuilder = Jwts.builder().subject(authentication.getName()).claim(AUTHORITIES_KEY, authorities).claim("db_password", "dog123");
         if (tool != null) {
             jwtBuilder.claim("tools", tool);
         }
