@@ -131,6 +131,7 @@ management:
                   - info
                   - jhimetrics
                   - logfile
+                  - heapdump
                   - loggers
                   - prometheus
                   - threaddump
