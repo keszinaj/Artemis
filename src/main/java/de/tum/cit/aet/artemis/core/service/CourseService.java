@@ -397,7 +397,7 @@ public class CourseService {
     public Set<Course> findAllActiveWithExercisesForUser(User user) {
         long start = System.nanoTime();
 
-        var userVisibleCourses = courseRepository.findAllActive().stream().filter(course -> isCourseVisibleForUser(user, course)).filter(Objects::nonNull)
+        var userVisibleCourses = courseRepository.findAllActive().stream().filter(Objects::nonNull)
                 .collect(Collectors.toSet());
 
         if (log.isDebugEnabled()) {
