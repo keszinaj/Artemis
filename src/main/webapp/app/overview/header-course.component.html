@@ -3,7 +3,7 @@
         <div class="col general-info">
             <div class="d-flex justify-content-between">
                 <div class="course-description">
-                    <h3 id="course-header-title" class="fw-medium" [class.mb-0]="!courseDescription">{{ course.title }}</h3>
+                    <h3 id="course-header-title" class="fw-medium" [class.mb-0]="!courseDescription" [innerHTML]="course.title"></h3>
                     @if (courseDescription) {
                         <div style="display: block">
                             <h6 id="course-header-description" class="fw-normal">{{ courseDescription }}</h6>
